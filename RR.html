@@ -1,0 +1,115 @@
+<html>
+
+<head>
+  <title>Russels Research Gibberish Detector</title>
+</head>
+
+<style> 
+ body {
+    background-image: url("backgrnd.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  }
+  .fontoftext{
+    font-size: 45px;
+  }
+  .textbox{
+    height: 40px;
+    width: 300px;
+    font-size: 30px;
+  }
+  .borders{
+    
+    margin-top:100px;
+    margin-bottom: 100px;
+    margin-right: auto;
+    margin-left: auto;
+
+    height: 50%;
+    width: 50%;
+    border:6px solid blue;
+    border-radius: 50px;
+  }
+  
+.button1 {
+  color: black; 
+  border: 4px solid #66ACEA;
+  height: 45px;
+  width: 300px;
+  font-size: 30px;
+}
+
+.button1:hover {
+  background-color: #66ACEA;
+  color: white;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+<div class="borders">
+
+
+<h1 class="fontoftext" style="color:darkblue;text-align: center">Russels Research Gibberish Detector</h1>
+
+  <div align="center">
+    <b>
+        <label class="textbox" for="phrase">Enter Text</label>
+        <input class="textbox" type = "Text" id = "phrase">
+    </b>
+  </div>
+
+  <br>
+  <div align="center" id="load">
+    <p class="textbox" id="p" style="font-size: 20px;"></p>
+  </div>
+
+<div style="padding: 30px">
+
+
+  <div align="center">
+    <button class="button button1" type="submit" onclick="sendinfo()">Submit</button>
+  </div>
+
+</div>
+
+</html>
+
+<script>
+function sendinfo(){
+    
+    var phrase = document.getElementById("phrase").value;
+    var sent = "phrase=" +phrase;
+    document.getElementById("load").innerHTML = "<div class='loader'></div><br>";
+    var access = new XMLHttpRequest();
+    
+     access.open("POST", "rr.php", true);
+     access.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    access.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        
+        document.getElementById("load").innerHTML = "<p class='textbox' style='font-size: 20px;'>"+this.responseText+" chance that sentence is gibberish</p>";
+      }
+    }
+
+    access.send(sent);
+}   
+</script>
